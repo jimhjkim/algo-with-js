@@ -3,6 +3,7 @@
  * if each unique character from the first string can be replaced to match the second
  * string, without changing the ordering of the characters.
  */
+// Time complexity: O(n)
 const isIsomorphic = (str1, str2) => {
   const mapping = {};
   const used = new Set();
