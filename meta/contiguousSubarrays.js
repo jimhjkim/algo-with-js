@@ -1,34 +1,36 @@
-// time complexity: O(n)
-const countSubarrays = (arr) => { 
-    // const startTime = performance.now();
-    const len = arr.length;
-    const res = arr.map(a => 1);
-    let stack = [-1]; // store indices of arr to compare against current.
-    let i;
+/**
+ * You are given an array arr of N integers. For each index i, you are required to determine the number of contiguous subarrays
+ * that fulfill the following conditions:
+ * - The value at index i must be the maximum element in the contiguous subarrays, and
+ * - These contiguous subarrays must either start from or end on index i.
+ */
 
-    // fron left
-    for (i = 0; i < len; i++) {
-        while (stack.length > 1 && arr[stack[stack.length - 1]] < arr[i]) {
-            stack.pop();
-        }
-        res[i] += i - stack[stack.length - 1] - 1;
-        stack.push(i);
-        console.log(i, res, stack);
+// time complexity: O(n)
+const countSubarrays = (arr) => {
+  const len = arr.length;
+  const res = arr.map((a) => 1);
+  let stack = [-1]; // store indices of arr to compare against current.
+  let i;
+
+  // fron left
+  for (i = 0; i < len; i++) {
+    while (stack.length > 1 && arr[stack[stack.length - 1]] < arr[i]) {
+      stack.pop();
     }
-    // from right
-    stack = [len];
-    for (i = len - 1; i >= 0; i--) {
-        while (stack.length > 1 && arr[stack[stack.length - 1]] < arr[i]) {
-            stack.pop();
-        }
-        res[i] += stack[stack.length - 1] - i - 1;
-        stack.push(i);
-        console.log(i, res, stack);
+    res[i] += i - stack[stack.length - 1] - 1;
+    stack.push(i);
+  }
+  // from right
+  stack = [len];
+  for (i = len - 1; i >= 0; i--) {
+    while (stack.length > 1 && arr[stack[stack.length - 1]] < arr[i]) {
+      stack.pop();
     }
-    // const endTime = performance.now();
-    // console.log(`{endTime - startTime} milliseconds`);
-    return res;
-}
+    res[i] += stack[stack.length - 1] - i - 1;
+    stack.push(i);
+  }
+  return res;
+};
 
 // Time complexity: O(n^2)
 // const countSubarrays = (arr) => {
@@ -36,7 +38,7 @@ const countSubarrays = (arr) => {
 //     const counter = arr.map(a => 0);
 //     for (let idx = 0; idx < length; idx++) {
 //         counter[idx]++;
-//         if (idx === 0) continue;   
+//         if (idx === 0) continue;
 //         let pointer = idx - 1;
 //         while (pointer >= 0 && pointer < length && arr[idx] > arr[pointer]) {
 //             counter[idx]++;
@@ -57,7 +59,7 @@ const expected1 = [1, 3, 1, 5, 1];
 const output1 = countSubarrays(test1);
 console.log(expected1, output1);
 
-// const test2 = [2, 4, 7, 1, 5, 3];
-// const expected2 = [1, 2, 6, 1, 3, 1];
-// const output2 = countSubarrays(test2);
-// console.log(expected2, output2);
+const test2 = [2, 4, 7, 1, 5, 3];
+const expected2 = [1, 2, 6, 1, 3, 1];
+const output2 = countSubarrays(test2);
+console.log(expected2, output2);
